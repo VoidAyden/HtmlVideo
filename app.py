@@ -6,7 +6,7 @@ socketio = SocketIO(app)
 
 @app.route('/')
 def index():
-    return render_template('your-html-filename.html')
+    return render_template('term.html')
 
 @socketio.on('input')
 def handle_input(input_text):
