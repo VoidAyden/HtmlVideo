@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Terminal with YouTube Video</title>
+    <script src="https://cdn.socket.io/3.0.4/socket.io.min.js"></script>
+</head>
+<body>
+    <div>
+        <!-- Replace 'VIDEO_ID' with the actual YouTube video ID -->
+        <iframe width="1920" height="1080" src="https://www.youtube.com/embed/LjW3IshPiHI" frameborder="0" allowfullscreen></iframe>
+    </div>
+    
+    <div id="terminal"></div>
+
+    <script>
+        const socket = io.connect('http://' + document.domain + ':' + location.port);
+
+        const terminalContainer = document.getElementById('terminal');
+        const terminal = new Terminal();
+        terminal.open(terminalContainer);
+
+        terminal.onData(data => {
+            socket.emit('input', data);
+        });
+
+        socket.on('output', output => {
+            terminal.write(output);
+        });
+    </script>
+</body>
+</html>
